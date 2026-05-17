@@ -1,0 +1,625 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap');
+
+/* ==========================================
+   1. CSS Reset & 디자인 시스템 변수 정의
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.03em;
+}
+
+:root {
+    /* 남색 바탕 & 빨간 포인트 & 흰색 텍스트 테마 */
+    --primary-color: #0A192F;     /* 짙은 남색 (배경) */
+    --secondary-color: #FF3333;   /* 강렬한 빨간색 (중요 포인트/버튼) */
+    --accent-color: #FF5555;      /* 밝은 빨간색 (제목/강조용) */
+    --text-main: #FFFFFF;         /* 메인 글자색 (흰색) */
+    --text-sub: #A8B2D1;          /* 본문 서브 글자색 (밝은 회색/블루그레이) */
+    --bg-light: #112240;          /* 섹션 구분용 약간 밝은 남색 */
+    --bg-card: #172A45;           /* 카드 배경용 남색 */
+    --white: #FFFFFF;
+    
+    /* 그림자 및 애니메이션 기본값 */
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 바운스 애니메이션 효과 */
+}
+
+/* 애니메이션 키프레임 추가 */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px rgba(255, 51, 51, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(255, 51, 51, 0.8); }
+    100% { box-shadow: 0 0 10px rgba(255, 51, 51, 0.4); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes textShine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+html {
+    scroll-behavior: smooth;
+    color: var(--text-main);
+    background-color: var(--primary-color);
+}
+
+body {
+    line-height: 1.7;
+    word-break: keep-all;
+    background-color: var(--primary-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ==========================================
+   2. 공통 컴포넌트 레이아웃
+   ========================================== */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.25rem;
+    color: var(--white);
+    margin-bottom: 60px;
+    font-weight: 700;
+    position: relative;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--secondary-color);
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--secondary-color); /* 글로우 효과 */
+}
+
+/* ==========================================
+   3. Header (상단 네비게이션)
+   ========================================== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.05em;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 35px;
+}
+
+.nav-menu a {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-sub);
+    position: relative;
+    padding: 5px 0;
+    transition: var(--transition);
+}
+
+.nav-menu a:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 8px rgba(255, 51, 51, 0.5);
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: var(--transition);
+    box-shadow: 0 0 8px var(--secondary-color);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+/* ==========================================
+   4. Hero Section
+   ========================================== */
+.hero {
+    background: linear-gradient(135deg, #0A192F 0%, #112240 100%);
+    color: var(--white);
+    padding: 200px 0 140px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,51,51,0.05) 0%, rgba(10,25,47,0) 70%);
+    animation: float 10s infinite linear;
+    z-index: 0;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 25px;
+    color: var(--white);
+    animation: fadeInUp 1s ease-out;
+}
+
+/* 그라디언트 텍스트 효과로 화려함 강조 */
+.hero h1 span {
+    background: linear-gradient(90deg, #FF3333, #FF8888, #FF3333);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShine 3s linear infinite;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 50px;
+    color: var(--text-sub);
+    animation: fadeInUp 1.2s ease-out forwards;
+    opacity: 0;
+}
+
+.cta-btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 18px 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px; /* 둥근 버튼으로 더 세련되게 */
+    box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
+    transition: var(--transition);
+    animation: fadeInUp 1.4s ease-out forwards, pulseGlow 2s infinite alternate;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+.cta-btn:hover::before {
+    left: 100%;
+}
+
+.cta-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    background-color: #FF5555;
+    box-shadow: 0 10px 30px rgba(255, 51, 51, 0.6);
+    animation: none; /* 호버 시 펄스 정지 */
+}
+
+/* ==========================================
+   5. Features Section
+   ========================================== */
+.features {
+    padding: 120px 0;
+    background-color: var(--bg-light); /* 약간 더 밝은 남색 */
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    gap: 40px;
+}
+
+@media (min-width: 768px) {
+    .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.feature-card {
+    background-color: var(--bg-card);
+    padding: 50px 30px;
+    border-radius: 16px;
+    text-align: center;
+    border-top: 5px solid var(--secondary-color);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.2s; }
+.feature-card:nth-child(2) { animation-delay: 0.4s; }
+.feature-card:nth-child(3) { animation-delay: 0.6s; }
+
+.feature-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 5px;
+    background-color: var(--secondary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+}
+
+.feature-card:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.feature-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 51, 51, 0.15);
+    border-top-color: var(--accent-color);
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.feature-card .highlight {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    text-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.feature-card:hover .highlight {
+    transform: scale(1.1);
+    text-shadow: 0 0 25px rgba(255, 51, 51, 0.8);
+}
+
+.feature-card p {
+    color: var(--text-sub);
+    line-height: 1.8;
+}
+
+/* ==========================================
+   6. About & History Section
+   ========================================== */
+.about {
+    padding: 120px 0;
+    background-color: var(--primary-color);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto 80px auto;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-sub);
+    line-height: 1.9;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.history {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 40px;
+    border-left: 3px solid rgba(255, 51, 51, 0.3);
+}
+
+.history-item {
+    margin-bottom: 45px;
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.history-item:nth-child(1) { animation-delay: 0.3s; }
+.history-item:nth-child(2) { animation-delay: 0.5s; }
+.history-item:nth-child(3) { animation-delay: 0.7s; }
+
+.history-item:last-child {
+    margin-bottom: 0;
+}
+
+.history-item::before {
+    content: '';
+    position: absolute;
+    left: -48.5px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 0 3px var(--secondary-color), 0 0 15px rgba(255, 51, 51, 0.6);
+    z-index: 1;
+    transition: var(--transition);
+}
+
+.history-item:hover::before {
+    transform: scale(1.3);
+    box-shadow: 0 0 0 3px var(--accent-color), 0 0 20px rgba(255, 51, 51, 0.9);
+}
+
+.history-date {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    text-shadow: 0 0 8px rgba(255, 51, 51, 0.3);
+}
+
+.history-item p {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: var(--transition);
+}
+
+.history-item:hover p {
+    transform: translateX(10px);
+    background-color: #1A2F4C;
+}
+
+/* ==========================================
+   7. Consultation Form Section
+   ========================================== */
+.consultation {
+    padding: 120px 0;
+    background-color: var(--bg-light);
+}
+
+.form-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    padding: 60px;
+    border-radius: 16px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255,255,255,0.05);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.05em;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 18px;
+    border: 2px solid #2A3F5F;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    background-color: #0A192F;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #64748B;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    background-color: #112240;
+    box-shadow: 0 0 0 4px rgba(255, 51, 51, 0.15);
+    transform: translateY(-2px);
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 6px 20px rgba(255, 51, 51, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease-out;
+}
+
+.submit-btn:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    transition: 0s;
+}
+
+.submit-btn:hover {
+    background-color: #FF5555;
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 10px 30px rgba(255, 51, 51, 0.5);
+}
+
+/* ==========================================
+   8. Location Section
+   ========================================== */
+.location {
+    padding: 120px 0;
+    background-color: var(--primary-color);
+}
+
+.map-wrap {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.map-wrap iframe {
+    display: block;
+    width: 100%;
+}
+
+.map-info {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .map-info {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.map-info .address {
+    font-size: 1.15rem;
+    color: var(--white);
+}
+
+.map-info .address strong {
+    color: var(--secondary-color);
+    margin-right: 10px;
+}
+
+.naver-map-btn {
+    display: inline-block;
+    background-color: #03C75A; /* 네이버 고유 색상 */
+    color: #FFFFFF;
+    padding: 12px 25px;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(3, 199, 90, 0.3);
+}
+
+.naver-map-btn:hover {
+    background-color: #02b350;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(3, 199, 90, 0.5);
+    color: #FFFFFF;
+    text-shadow: none;
+}
+
+/* ==========================================
+   9. Footer
+   ========================================== */
+footer {
+    background-color: #020C1B;
+    color: var(--text-sub);
+    padding: 70px 0;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    text-align: center;
+}
+
+.footer-wrap p {
+    margin-bottom: 8px;
+}
+
+.footer-wrap p:last-child {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
