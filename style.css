@@ -15,9 +15,9 @@
     /* 남색 바탕 & 빨간 포인트 & 흰색 텍스트 테마 */
     --primary-color: #0A192F;
     /* 짙은 남색 (배경) */
-    --secondary-color: #33ffda;
+    --secondary-color: #FF3333;
     /* 강렬한 빨간색 (중요 포인트/버튼) */
-    --accent-color: #56f771;
+    --accent-color: #FF5555;
     /* 밝은 빨간색 (제목/강조용) */
     --text-main: #FFFFFF;
     /* 메인 글자색 (흰색) */
